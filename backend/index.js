@@ -1,20 +1,21 @@
 const express = require("express");
 const connection = require("./Db_Connection/Connection");
-const app = express();
-const reviewRoutes = require('./Routes/review');
+const reviewRoutes = require("./Routes/review");
 const cors = require("cors");
 
-
 require("dotenv").config();
+
+const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT_NUMBER || 5000;
+// Connect to the database
 connection();
 
-app.use('/api/reviews', reviewRoutes);
+// API routes
+app.use("/api/reviews", reviewRoutes);
 
-
-app.listen(PORT, () => {
-    console.log(`server is running on port : http://localhost:${PORT}`);
-});
+// Export the app for Vercel
+module.exports = app;
